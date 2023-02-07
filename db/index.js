@@ -29,7 +29,18 @@ class db {
         LEFT JOIN employee manager ON employee.manager_id = manager.id`);
     }
 
+    addNewDepartment(department) {
+        return this.connection.query("INSERT INTO department SET ?", department);
+    }
+    addNewRole(role) {
+        return this.connection.query("INSERT INTO role SET ?", role);
+    }
+    addNewEmployee(employee) {
+        return this.connection.query("INSERT INTO employee SET ?", employee);
+    }
+
 };
+
 
 
 module.exports = new db(connection);
