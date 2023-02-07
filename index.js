@@ -2,8 +2,6 @@ const { prompt } = require('inquirer');
 const mysql = require("mysql2");
 require("console.table");
 const db = require('./db');
-const { start } = require("repl");
-
 
 // THEN I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 
@@ -31,12 +29,12 @@ async function startQuestions() {
         {
           type: "input",
           name: "View all employees",
-          value: "bio",
+          value: "VIEW_EMPLOYEES",
         },
         {
           type: "input",
           name: "Add a department",
-          value: "linkedin",
+          value: "ADD_DEPART",
         },
         {
           type: "input",
@@ -55,10 +53,10 @@ async function startQuestions() {
         },
         {
           name: "Quit",
-          value: "quit",
+          value: "QUIT",
         },
       ]
-    },
+    }
   ])
 
   switch (choice) {
@@ -66,6 +64,10 @@ async function startQuestions() {
       return viewDepartments();
     case "VIEW_ROLES":
         return viewRoles();
+    case "VIEW_EMPLOYEES":
+      return viewEmployees();
+    case "QUIT": 
+    return quit();
   }
 };
 
@@ -81,5 +83,12 @@ async function viewRoles() {
     startQuestions();
 };
 
+async function viewEmployees() {
+  const employees = await db.viewAllEmployees();
+  console.table(employees);
+  startQuestions();
+};
+
 
 init();
+
